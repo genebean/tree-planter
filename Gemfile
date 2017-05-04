@@ -1,14 +1,10 @@
 source "https://rubygems.org/"
 
 # App Stack
+gem "json",      "~> 2.1"
 gem "passenger", "~> 5.1"
 gem "sinatra",   "~> 1.4"
 
-if RUBY_VERSION < '2.0'
-  gem 'json', '1.8.3'
-else
-  gem 'json', '~> 2.1'
-end
 
 group :development do
 

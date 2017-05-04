@@ -13,7 +13,6 @@ vendor
 .gitignore
 .travis.yml
 config.json
-Gemfile.lock
 passenger.[0-9]*
 Passenger*.json
 thin*.yml
@@ -22,4 +21,3 @@ Vagrantfile
 *.pid
 *.pp
 *.swp
-

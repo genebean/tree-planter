@@ -1,6 +1,8 @@
 sudo: required
 
 language: ruby
+rvm:
+  - 2.4.1
 
 services:
   - docker
@@ -17,4 +19,3 @@ script:
   - bash test/travisci_test_locally.sh
   - sudo bash test/travisci_clean_trees.sh
   - bash test/travisci_test_running_container.sh
-

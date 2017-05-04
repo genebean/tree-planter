@@ -11,8 +11,6 @@
 *.pid
 *.swp
 config.json
-Gemfile.lock
 passenger.[0-9]*
 Passenger.json
 thin.yml
-

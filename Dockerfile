@@ -1,7 +1,6 @@
 FROM ruby:2.4-slim
 
 LABEL maintainer "gene@technicalissues.us"
-LABEL version="2.0.0"
 
 ENV GOSU_VERSION 1.10
 
