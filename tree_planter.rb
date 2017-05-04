@@ -227,10 +227,10 @@ class TreePlanter < Sinatra::Base
           exit_status = wait_thr.value
           if exit_status.success?
             status 200
-            #body body_content
+            # body body_content
           else
             status 500
-            #body body_content
+            # body body_content
           end
         end # end Open3
       else
