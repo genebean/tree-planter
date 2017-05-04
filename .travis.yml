@@ -15,6 +15,7 @@ before_install:
 
 script:
   - docker exec planted_travis /bin/sh -c 'bundle exec rake test'
+  - docker exec planted_travis /bin/sh -c 'bundle exec rake rubocop'
   - sudo bash test/travisci_clean_trees.sh
   - bash test/travisci_test_locally.sh
   - sudo bash test/travisci_clean_trees.sh

@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     ansi (1.5.0)
+    ast (2.3.0)
     builder (3.2.3)
     json (2.1.0)
     minitest (5.10.1)
@@ -10,21 +11,32 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
+    parser (2.3.3.1)
+      ast (~> 2.2)
     passenger (5.1.3)
       rack
       rake (>= 0.8.1)
+    powerpack (0.1.1)
     rack (1.6.5)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
+    rainbow (2.2.1)
     rake (12.0.0)
+    rubocop (0.48.1)
+      parser (>= 2.3.3.1, < 3.0)
+      powerpack (~> 0.1)
+      rainbow (>= 1.99.1, < 3.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
     sinatra (1.4.8)
       rack (~> 1.5)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
     tilt (2.0.7)
+    unicode-display_width (1.1.3)
 
 PLATFORMS
   ruby
@@ -35,6 +47,7 @@ DEPENDENCIES
   minitest-reporters (~> 1.1)
   passenger (~> 5.1)
   rack-test (~> 0.6)
+  rubocop (~> 0.48)
   sinatra (~> 1.4)
 
 BUNDLED WITH
