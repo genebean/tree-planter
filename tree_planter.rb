@@ -42,7 +42,7 @@ class TreePlanter < Sinatra::Base
       logger.info("repo path = #{repo_path}")
     else
       tree_name    = (payload['repository']['url'].split('/')[-1]).split('.')[0]
-      branch_name  = (payload['ref'].split('/')).drop(2).join('___')
+      branch_name  = payload['ref'].split('/').drop(2).join('___')
       repo_url     = payload['repository']['url']
       if payload.key?('repo_path')
         repo_path  = payload['repo_path']
@@ -73,13 +73,13 @@ class TreePlanter < Sinatra::Base
     if payload['ref'].split('/')[1].eql? 'heads'
       endpoint     = 'gitlab'
       tree_name    = (payload['repository']['url'].split('/')[-1]).split('.')[0]
-      branch_name  = (payload['ref'].split('/')).drop(2).join('/')
+      branch_name  = payload['ref'].split('/').drop(2).join('/')
       repo_name    = payload['repository']['name']
       if payload.key?('repo_path')
         repo_path  = payload['repo_path']
       else
         # rubocop:disable Metrics/LineLength
-        repo_path  = "#{tree_name}___#{(payload['ref'].split('/')).drop(2).join('___')}"
+        repo_path  = "#{tree_name}___#{payload['ref'].split('/').drop(2).join('___')}"
         # rubocop:enable Metrics/LineLength
       end
       repo_url     = payload['repository']['url']
