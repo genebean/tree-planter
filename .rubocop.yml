@@ -1,4 +1,29 @@
 ---
 AllCops:
   Exclude:
-    'trees/**/*'
+    - 'trees/**/*'
+    - 'vendor/**/*'
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/LineLength:
+  Exclude:
+    - 'Vagrantfile'
+    - 'test/tree_planter_test.rb'
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Style/ConditionalAssignment:
+  Enabled: false
+
+Style/ExtraSpacing:
+  Enabled: false
+

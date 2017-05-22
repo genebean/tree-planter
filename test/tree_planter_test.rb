@@ -36,6 +36,14 @@ class TreePlanterTest < MiniTest::Test
     assert last_response.body.include?('repo_path: tree-planter___master')
   end
 
+  def test_post_gitlab_custom_path
+    payload = '{"ref":"refs/heads/master", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }, "repo_path":"custom_path"}'
+    header 'Content-Type', 'application/json'
+    post '/gitlab', payload, 'CONTENT_TYPE' => 'application/json'
+    assert last_response.ok?
+    assert last_response.body.include?('repo_path: custom_path')
+  end
+
   def test_post_gitlab_delete
     payload = '{"ref":"refs/heads/master", "checkout_sha":"0000000000000000000000000000000000000000", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}'
     header 'Content-Type', 'application/json'

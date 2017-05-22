@@ -2,4 +2,3 @@
 require './tree_planter'
 
 run TreePlanter
-
