@@ -15,7 +15,7 @@ group :development do
 end
 
 group :test do
-  gem 'minitest',           '~> 5.12'
+  gem 'minitest',           '~> 5.13'
   gem 'minitest-reporters', '~> 1.3'
   gem 'rack-test',          '~> 1.1'
   gem 'rubocop',            '~> 0.75'
