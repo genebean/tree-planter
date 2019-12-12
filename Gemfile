@@ -3,7 +3,7 @@
 source 'https://rubygems.org/'
 
 # App Stack
-gem 'json',      '~> 2.2'
+gem 'json',      '~> 2.3'
 gem 'passenger', '~> 6.0'
 gem 'sinatra',   '~> 2.0'
 
