@@ -9,7 +9,7 @@ gem 'sinatra',   '~> 2.0'
 
 # rack is pulled as a dep of passenger but needs to be above 2.0.6
 # to resolve CVE-2018-16471
-gem 'rack',      '~> 2.0', '>= 2.0.7'
+gem 'rack',      '~> 2.0'
 
 group :development do
 end
