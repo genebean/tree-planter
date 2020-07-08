@@ -6,7 +6,7 @@ source 'https://rubygems.org/'
 gem 'json',              '~> 2.3'
 gem 'passenger',         '~> 6.0', '>= 6.0.2'
 gem 'prometheus-client', '~> 1.0'
-gem 'rack',              '~> 2.0', '>= 2.0.8'
+gem 'rack',              '~> 2.1'
 gem 'sinatra',           '~> 2.0', '>= 2.0.5'
 
 group :development do
