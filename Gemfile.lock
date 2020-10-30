@@ -6,7 +6,7 @@ GEM
     builder (3.2.4)
     etc (1.1.0)
     json (2.3.1)
-    minitest (5.14.1)
+    minitest (5.14.2)
     minitest-reporters (1.4.2)
       ansi
       builder
