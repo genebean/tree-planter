@@ -72,7 +72,7 @@ DEPENDENCIES
   rack-test (~> 1.1)
   rubocop (~> 0.87)
   rubocop-performance (~> 1.7)
-  sinatra (~> 2.0)
+  sinatra (~> 2.1)
 
 BUNDLED WITH
    2.1.4
