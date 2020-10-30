@@ -5,12 +5,13 @@ require 'logger'
 require 'open3'
 require 'prometheus/client'
 require 'sinatra/base'
+require 'pony'
 
 # This is my Sinatra app for planting trees
 class TreePlanter < Sinatra::Base
   set :logging, true
 
-  config_obj = JSON.parse(File.read(Dir.pwd + '/config.json'))
+  config_obj = JSON.parse(File.read("#{Dir.pwd}/config.json"))
   prometheus = Prometheus::Client.registry
   tree_deploy_counter = Prometheus::Client::Counter.new(
     :tree_deploys,
@@ -88,7 +89,8 @@ class TreePlanter < Sinatra::Base
     logger.info("json payload: #{payload.inspect}")
 
     # Determine event type
-    if payload['ref'].split('/')[1].eql? 'heads'
+    case payload['ref'].split('/')[1]
+    when 'heads'
       # rubocop:disable Layout/SpaceAroundOperators
       endpoint     = 'gitlab'
       tree_name    = (payload['repository']['url'].split('/')[-1]).split('.')[0]
@@ -120,7 +122,7 @@ class TreePlanter < Sinatra::Base
         deploy_tree(endpoint, tree_name, branch_name, repo_url, repo_path, config_obj, tree_deploy_counter)
       end
 
-    elsif payload['ref'].split('/')[1].eql? 'tags'
+    when 'tags'
       tag_name = payload['ref'].split('/')[2]
       logger.info("tag = #{tag_name}")
     end
@@ -198,10 +200,11 @@ class TreePlanter < Sinatra::Base
   end
   # rubocop:enable Metrics/AbcSize
 
-  # rubocop:disable Metrics/AbcSize, Metrics/ParameterLists, Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/ParameterLists, Metrics/PerceivedComplexity
   def deploy_tree(endpoint, tree_name, branch_name, repo_url, repo_path, config_obj, tree_deploy_counter)
     # rubocop:enable Metrics/ParameterLists
     base = config_obj['base_dir']
+    email_body = ''
 
     stream do |body_content|
       body_content << "endpoint:  #{endpoint}\n"
@@ -244,8 +247,16 @@ class TreePlanter < Sinatra::Base
 
         Open3.popen2e(deploy_command) do |_stdin, stdout_err, wait_thr|
           # rubocop:disable Lint/AssignmentInCondition
+          email_body << "endpoint:  #{endpoint}\n"
+          email_body << "tree:      #{tree_name}\n"
+          email_body << "branch:    #{branch_name}\n"
+          email_body << "repo_url:  #{repo_url}\n"
+          email_body << "repo_path: #{repo_path}\n"
+          email_body << "base:      #{base}\n\n"
+          email_body << "Deploy command: #{deploy_command}\n\n"
           while line = stdout_err.gets
             body_content << line
+            email_body << line
             logger.info(line)
           end
           # rubocop:enable Lint/AssignmentInCondition
@@ -257,6 +268,9 @@ class TreePlanter < Sinatra::Base
           else
             status 500
             # body body_content
+            pony_email_options = config_obj['pony_email_options']
+            pony_email_defaults = { body: email_body.to_s, subject: 'Tree Planter Deployment Problem' }
+            email_reseults(pony_email_options, pony_email_defaults) if config_obj['send_email_on_failure']
           end
         end # end Open3
 
@@ -275,5 +289,32 @@ class TreePlanter < Sinatra::Base
     end
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
+
+  private
+
+  def email_reseults(pony_email_options, pony_email_defaults)
+    pony_email_options_merged = pony_email_defaults.merge(symbolize(pony_email_options))
+    Pony.mail(pony_email_options_merged)
+  end
+
+  def symbolize(obj)
+    if obj.is_a? Hash
+      return obj.reduce({}) do |item, (key, value)|
+        item.tap do |i|
+          i[key.to_sym] = symbolize(value)
+        end
+      end
+    end
+
+    if obj.is_a? Array
+      return obj.each_with_object([]) do |item, value|
+        item << symbolize(value)
+        item
+      end
+    end
+
+    obj
+  end
 end

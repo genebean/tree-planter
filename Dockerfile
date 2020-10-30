@@ -9,7 +9,7 @@ WORKDIR $APP_ROOT
 
 RUN apt-get update -qq \
   && apt-get upgrade -y \
-  && apt-get install -y --no-install-recommends dirmngr gcc git make gnupg2 openssh-client ruby-dev wget \
+  && apt-get install -y --no-install-recommends dirmngr gcc git make gnupg2 openssh-client ruby-dev wget sendmail \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/*

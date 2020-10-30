@@ -189,6 +189,55 @@ docker::run { 'johnny_appleseed':
 }
 ```
 
+### Send email on deployment failure
+
+tree-planter uses the [Pony](https://github.com/benprew/pony) gem to send emails. Please see the Pony documentation and pass any Pony specific option keys to the `pony_email_options` in `config.json`, and set `send_email_on_failure` equal to `true`.
+
+For example, create `config-custom-example.json`:
+
+```
+{
+  "base_dir": "/opt/trees",
+  "send_email_on_failure": true,
+  "pony_email_options": {
+    "to": "you@example.com",
+    "via": "smtp",
+    "via_options": {
+      "address"              : "smtp.gmail.com",
+      "port"                 : "587",
+      "enable_starttls_auto" : true,
+      "user_name"            : "user",
+      "password"             : "password",
+      "authentication"       : "plain",
+      "domain"               : "localhost.localdomain"
+    }
+  }
+}
+```
+
+And modify the `docker::run` resource to use the custom `config.json`:
+
+```
+docker::run { 'johnny_appleseed':
+  image           => 'genebean/tree-planter',
+  ports           => '80:8080',
+  volumes         => [
+    "/home/${appuser}/.ssh/vagrant_priv_key:/home/user/.ssh/id_rsa",
+    "/home/${appuser}/trees:/opt/trees",
+    '/var/log/tree-planter:/var/www/tree-planter/log',
+    '/vagrant/config-custom-example.json:/var/www/tree-planter/config.json',
+  ],
+  env             => "LOCAL_USER_ID=${appuseruid}",
+  restart_service => true,
+  privileged      => false,
+  require         => [
+    User[$appuser],
+    File["/home/${appuser}/trees"],
+    File['/var/log/tree-planter'],
+  ],
+}
+```
+
 ## End Points
 
 tree-planter has the following endpoints:
