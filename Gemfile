@@ -3,7 +3,7 @@
 source 'https://rubygems.org/'
 
 # App Stack
-gem 'json',              '~> 2.3'
+gem 'json',              '~> 2.5'
 gem 'passenger',         '~> 6.0'
 gem 'pony',              '~> 1.13'
 gem 'prometheus-client', '~> 2.1'
