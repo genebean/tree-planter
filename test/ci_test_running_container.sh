@@ -3,6 +3,7 @@ set -e
 
 pre_branch='{"ref":"refs/heads/'
 post_branch='", "repository":{"name":"tree-planter", "url":'\"https://github.com/${REPOSITORY}.git\"' }'
+pr_post_branch='", "repository":{"name":"tree-planter", "url":'\"${GIT_HEAD_REPO}\"' }'
 repo_path=', "repo_path":"custom_path"'
 closing='}'
 
@@ -134,21 +135,19 @@ echo
 ################################################################################
 #   Testing /gitlab with the branch defined by ${CURRENT_BRANCH}
 ################################################################################
-current_branch=$(echo ${GIT_REF} | cut -d / -f3-)
-if [ "${current_branch}" != "master" ] && [ "${current_branch}" != "develop" ]; then
-  payload="${pre_branch}${current_branch}${post_branch}${closing}"
-  echo "Posting this payload to /gitlab to test branch ${current_branch}:"
-  echo ${payload}|jq -C .
-  echo
+current_branch=$(echo ${GIT_HEAD_REF} | cut -d / -f3-)
+payload="${pre_branch}${current_branch}${pr_post_branch}${closing}"
+echo "Posting this payload to /gitlab to test branch ${current_branch}:"
+echo ${payload}|jq -C .
+echo
 
-  curl -s -H "Content-Type: application/json" -X POST -d "${payload}" http://127.0.0.1:80/gitlab
-  branch_dir=`echo "tree-planter___${current_branch}" | sed 's/\//___/g'`
-  branch_check=`ls -d ${WORKSPACE}/trees/${branch_dir}/ |wc -l`
+curl -s -H "Content-Type: application/json" -X POST -d "${payload}" http://127.0.0.1:80/gitlab
+branch_dir=`echo "tree-planter___${current_branch}" | sed 's/\//___/g'`
+branch_check=`ls -d ${WORKSPACE}/trees/${branch_dir}/ |wc -l`
 
-  if [ $branch_check -eq 1 ];then
-    echo "Successfully pulled the ${current_branch} branch"
-  else
-    echo "Failed to pull the ${current_branch} branch"
-    exit 1
-  fi
+if [ $branch_check -eq 1 ];then
+  echo "Successfully pulled the ${current_branch} branch"
+else
+  echo "Failed to pull the ${current_branch} branch"
+  exit 1
 fi

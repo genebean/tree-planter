@@ -43,6 +43,8 @@ jobs:
           WORKSPACE: ${{ github.workspace }}
           REPOSITORY: ${{ github.repository }}
           GIT_REF: ${{ github.ref }}
+          GIT_HEAD_REPO: ${{ github.event.pull_request.head.repo.clone_url }}
+          GIT_HEAD_REF: ${{ github.head_ref }}
         run: |
           docker run -d -p 127.0.0.1:80:8080 --name planted_trees -v ${{ github.workspace }}/trees:/opt/trees -e LOCAL_USER_ID=`id -u $USER` ${{ github.repository }}:${{ github.sha }}
           docker ps -a
