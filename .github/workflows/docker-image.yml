@@ -38,7 +38,8 @@ jobs:
           push: false
           tags: ${{ github.repository }}:${{ github.sha }}
 
-      - name: Test Docker Image
+      - name: Test Docker Image - Original Repo
+        if: ${{ github.head_ref != '' }}
         env:
           WORKSPACE: ${{ github.workspace }}
           REPOSITORY: ${{ github.repository }}
@@ -46,6 +47,23 @@ jobs:
           GIT_HEAD_REPO: ${{ github.event.pull_request.head.repo.clone_url }}
           GIT_HEAD_REF: ${{ github.head_ref }}
         run: |
+          docker run -d -p 127.0.0.1:80:8080 --name planted_trees -v ${{ github.workspace }}/trees:/opt/trees -e LOCAL_USER_ID=`id -u $USER` ${{ github.repository }}:${{ github.sha }}
+          docker ps -a
+          docker exec planted_trees /bin/sh -c 'bundle exec rake test'
+          docker exec planted_trees /bin/sh -c 'bundle exec rake rubocop'
+          echo "Removing all files from ${WORKSPACE}/trees/"
+          sudo rm -rf ${{ github.workspace }}/trees/*
+          bash test/ci_test_running_container.sh
+
+      - name: Test Docker Image - Fork Repo
+        if: ${{ github.head_ref == '' }}
+        env:
+          WORKSPACE: ${{ github.workspace }}
+          REPOSITORY: ${{ github.repository }}
+          GIT_REF: ${{ github.ref }}
+          GIT_HEAD_REPO: ${{ github.event.repository.clone_url }}
+        run: |
+          echo "GIT_HEAD_REF=$(echo ${{ github.ref }} | cut -d / -f3-)" >> $GITHUB_ENV
           docker run -d -p 127.0.0.1:80:8080 --name planted_trees -v ${{ github.workspace }}/trees:/opt/trees -e LOCAL_USER_ID=`id -u $USER` ${{ github.repository }}:${{ github.sha }}
           docker ps -a
           docker exec planted_trees /bin/sh -c 'bundle exec rake test'

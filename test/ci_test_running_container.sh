@@ -133,21 +133,23 @@ echo
 
 
 ################################################################################
-#   Testing /gitlab with the branch defined by ${CURRENT_BRANCH}
+#   Testing /gitlab with the branch defined by ${GIT_HEAD_REF}
 ################################################################################
-current_branch=$(echo ${GIT_HEAD_REF} | cut -d / -f3-)
-payload="${pre_branch}${current_branch}${pr_post_branch}${closing}"
-echo "Posting this payload to /gitlab to test branch ${current_branch}:"
-echo ${payload}|jq -C .
-echo
+if [ "${current_branch}" != "master" ]; then
+  current_branch=${GIT_HEAD_REF}
+  payload="${pre_branch}${GIT_HEAD_REF}${pr_post_branch}${closing}"
+  echo "Posting this payload to /gitlab to test branch ${current_branch}:"
+  echo ${payload}|jq -C .
+  echo
 
-curl -s -H "Content-Type: application/json" -X POST -d "${payload}" http://127.0.0.1:80/gitlab
-branch_dir=`echo "tree-planter___${current_branch}" | sed 's/\//___/g'`
-branch_check=`ls -d ${WORKSPACE}/trees/${branch_dir}/ |wc -l`
+  curl -s -H "Content-Type: application/json" -X POST -d "${payload}" http://127.0.0.1:80/gitlab
+  branch_dir=`echo "tree-planter___${current_branch}" | sed 's/\//___/g'`
+  branch_check=`ls -d ${WORKSPACE}/trees/${branch_dir}/ |wc -l`
 
-if [ $branch_check -eq 1 ];then
-  echo "Successfully pulled the ${current_branch} branch"
-else
-  echo "Failed to pull the ${current_branch} branch"
-  exit 1
+  if [ $branch_check -eq 1 ];then
+    echo "Successfully pulled the ${current_branch} branch"
+  else
+    echo "Failed to pull the ${current_branch} branch"
+    exit 1
+  fi
 fi
