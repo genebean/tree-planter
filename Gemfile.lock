@@ -7,7 +7,7 @@ GEM
     json (2.5.1)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
-    mini_mime (1.1.1)
+    mini_mime (1.1.2)
     minitest (5.14.4)
     minitest-reporters (1.4.3)
       ansi
@@ -47,8 +47,8 @@ GEM
       parser (>= 3.0.1.1)
     rubocop-minitest (0.15.2)
       rubocop (>= 0.90, < 2.0)
-    rubocop-performance (1.10.2)
-      rubocop (>= 0.90.0, < 2.0)
+    rubocop-performance (1.11.5)
+      rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
@@ -66,17 +66,17 @@ PLATFORMS
 
 DEPENDENCIES
   json (~> 2.3)
-  minitest (~> 5.14)
-  minitest-reporters (~> 1.4)
-  passenger (~> 6.0)
+  minitest (~> 5.14, >= 5.14.4)
+  minitest-reporters (~> 1.4, >= 1.4.3)
+  passenger (~> 6.0, >= 6.0.11)
   pony (~> 1.13)
   prometheus-client (~> 2.1)
   rack (~> 2.2)
   rack-test (~> 1.1)
-  rubocop (~> 1.22)
+  rubocop (~> 1.22, >= 1.22.1)
   rubocop-minitest (~> 0.15.2)
   rubocop-performance (~> 1.7)
-  sinatra (~> 2.0)
+  sinatra (~> 2.1)
 
 BUNDLED WITH
    2.2.29
