@@ -61,7 +61,6 @@ class TreePlanter < Sinatra::Base
       logger.info("repo url  = #{repo_url}")
       logger.info("repo path = #{repo_path}")
     else
-      # rubocop:disable Layout/SpaceAroundOperators
       tree_name    = (payload['repository']['url'].split('/')[-1]).split('.')[0]
       branch_name  = payload['ref'].split('/').drop(2).join('___')
       repo_url     = payload['repository']['url']
@@ -70,8 +69,6 @@ class TreePlanter < Sinatra::Base
       else
         repo_path  = tree_name
       end
-      # rubocop:enable Layout/SpaceAroundOperators
-
       logger.info("endpoint     = #{endpoint}")
       logger.info("tree name    = #{tree_name}")
       logger.info("repo url     = #{repo_url}")
@@ -91,7 +88,6 @@ class TreePlanter < Sinatra::Base
     # Determine event type
     case payload['ref'].split('/')[1]
     when 'heads'
-      # rubocop:disable Layout/SpaceAroundOperators
       endpoint     = 'gitlab'
       tree_name    = (payload['repository']['url'].split('/')[-1]).split('.')[0]
       branch_name  = payload['ref'].split('/').drop(2).join('/')
@@ -105,8 +101,6 @@ class TreePlanter < Sinatra::Base
       repo_url     = payload['repository']['url']
       checkout_sha = payload['checkout_sha']
       after        = payload['after']
-      # rubocop:enable Layout/SpaceAroundOperators
-
       logger.info("repo name    = #{repo_name}")
       logger.info("repo url     = #{repo_url}")
       logger.info("repo path    = #{repo_path}")
@@ -114,6 +108,7 @@ class TreePlanter < Sinatra::Base
       logger.info("checkout sha = #{checkout_sha}")
       logger.info("after sha    = #{after}")
       logger.info('')
+      # rubocop:disable Lint/DuplicateBranch
       if checkout_sha.eql?('0000000000000000000000000000000000000000') # old GitLab JSON Payload
         delete_branch(endpoint, repo_path, config_obj)
       elsif after.eql?('0000000000000000000000000000000000000000') && checkout_sha.nil? # newer GitLab JSON Payload
@@ -121,6 +116,7 @@ class TreePlanter < Sinatra::Base
       else
         deploy_tree(endpoint, tree_name, branch_name, repo_url, repo_path, config_obj, tree_deploy_counter)
       end
+      # rubocop:enable Lint/DuplicateBranch
 
     when 'tags'
       tag_name = payload['ref'].split('/')[2]
@@ -225,11 +221,11 @@ class TreePlanter < Sinatra::Base
       if Dir.exist?(base)
         Dir.chdir(base)
 
-        if !repo_path.nil?
-          repo_exists = Dir.exist?("./#{repo_path}")
-        else
+        if repo_path.nil?
           repo_exists = nil
           abort('No repo path was set.')
+        else
+          repo_exists = Dir.exist?("./#{repo_path}")
         end
 
         if repo_exists

@@ -34,17 +34,19 @@ GEM
     rake (13.0.6)
     regexp_parser (2.1.1)
     rexml (3.2.5)
-    rubocop (0.93.1)
+    rubocop (1.22.1)
       parallel (~> 1.10)
-      parser (>= 2.7.1.5)
+      parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.8)
+      regexp_parser (>= 1.8, < 3.0)
       rexml
-      rubocop-ast (>= 0.6.0)
+      rubocop-ast (>= 1.12.0, < 2.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 2.0)
+      unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.12.0)
       parser (>= 3.0.1.1)
+    rubocop-minitest (0.15.2)
+      rubocop (>= 0.90, < 2.0)
     rubocop-performance (1.10.2)
       rubocop (>= 0.90.0, < 2.0)
       rubocop-ast (>= 0.4.0)
@@ -56,7 +58,7 @@ GEM
       rack-protection (= 2.1.0)
       tilt (~> 2.0)
     tilt (2.0.10)
-    unicode-display_width (1.8.0)
+    unicode-display_width (2.1.0)
 
 PLATFORMS
   aarch64-linux
@@ -71,7 +73,8 @@ DEPENDENCIES
   prometheus-client (~> 2.1)
   rack (~> 2.2)
   rack-test (~> 1.1)
-  rubocop (~> 0.87)
+  rubocop (~> 1.22)
+  rubocop-minitest (~> 0.15.2)
   rubocop-performance (~> 1.7)
   sinatra (~> 2.0)
 
