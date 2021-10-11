@@ -41,10 +41,10 @@ Vagrant.configure(2) do |config|
     set -e
     rm -rf /home/vagrant/trees/tree-planter*
     curl -H "Content-Type: application/json" -X POST -d \
-      '{"ref":"refs/heads/master", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}' \
+      '{"ref":"refs/heads/main", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}' \
       http://localhost:80/deploy
     curl -H "Content-Type: application/json" -X POST -d \
-      '{"ref":"refs/heads/master", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}' \
+      '{"ref":"refs/heads/main", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}' \
       http://localhost:80/gitlab
     ls -ld /home/vagrant/trees/
     ls -l /home/vagrant/trees/

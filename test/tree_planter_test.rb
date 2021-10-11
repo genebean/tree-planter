@@ -23,23 +23,23 @@ class TreePlanterTest < MiniTest::Test
   end
 
   def test_post_deploy
-    payload = '{"ref":"refs/heads/master", "checkout_sha":"some_commit_sha", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}'
+    payload = '{"ref":"refs/heads/main", "checkout_sha":"some_commit_sha", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}'
     header 'Content-Type', 'application/json'
     post '/deploy', payload, 'CONTENT_TYPE' => 'application/json'
     assert last_response.ok?
     assert last_response.body.include?('repo_path: tree-planter')
   end
 
-  def test_post_gitlab_master
-    payload = '{"ref":"refs/heads/master", "checkout_sha":"some_commit_sha", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}'
+  def test_post_gitlab_main
+    payload = '{"ref":"refs/heads/main", "checkout_sha":"some_commit_sha", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}'
     header 'Content-Type', 'application/json'
     post '/gitlab', payload, 'CONTENT_TYPE' => 'application/json'
     assert last_response.ok?
-    assert last_response.body.include?('repo_path: tree-planter___master')
+    assert last_response.body.include?('repo_path: tree-planter___main')
   end
 
   def test_post_gitlab_custom_path
-    payload = '{"ref":"refs/heads/master", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }, "repo_path":"custom_path"}'
+    payload = '{"ref":"refs/heads/main", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }, "repo_path":"custom_path"}'
     header 'Content-Type', 'application/json'
     post '/gitlab', payload, 'CONTENT_TYPE' => 'application/json'
     assert last_response.ok?
@@ -47,7 +47,7 @@ class TreePlanterTest < MiniTest::Test
   end
 
   def test_post_gitlab_delete
-    payload = '{"ref":"refs/heads/master", "checkout_sha":"0000000000000000000000000000000000000000", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}'
+    payload = '{"ref":"refs/heads/main", "checkout_sha":"0000000000000000000000000000000000000000", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}'
     header 'Content-Type', 'application/json'
     post '/gitlab', payload, 'CONTENT_TYPE' => 'application/json'
     assert last_response.body.include?('base exists: true')
@@ -55,7 +55,7 @@ class TreePlanterTest < MiniTest::Test
   end
 
   def test_post_hook_test
-    payload = '{"ref":"refs/heads/master", "checkout_sha":"some_commit_sha", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}'
+    payload = '{"ref":"refs/heads/main", "checkout_sha":"some_commit_sha", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}'
     header 'Content-Type', 'application/json'
     post '/hook-test', payload
     assert last_response.ok?
