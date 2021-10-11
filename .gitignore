@@ -10,6 +10,7 @@
 *.log
 *.pid
 *.swp
+.dccache
 config.json
 passenger.[0-9]*
 Passenger.json

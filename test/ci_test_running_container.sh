@@ -61,31 +61,31 @@ echo
 
 
 ################################################################################
-#   Testing /gitlab with master branch and default location
+#   Testing /gitlab with main branch and default location
 ################################################################################
-payload="${pre_branch}master${post_branch}${closing}"
+payload="${pre_branch}main${post_branch}${closing}"
 echo 'Posting this payload to /gitlab:'
 echo ${payload}|jq -C .
 echo
 
 curl -s -H "Content-Type: application/json" -X POST -d "${payload}" http://127.0.0.1:80/gitlab
 
-master_check=`ls -d ${WORKSPACE}/trees/tree-planter___master/ |wc -l`
+main_check=`ls -d ${WORKSPACE}/trees/tree-planter___main/ |wc -l`
 
-if [ $master_check -eq 1 ]; then
-  echo 'Successfully pulled master'
+if [ $main_check -eq 1 ]; then
+  echo 'Successfully pulled main'
 else
-  echo 'Failed to pull master'
+  echo 'Failed to pull main'
   exit 1
 fi
 echo
 
 
 ################################################################################
-#   Testing /gitlab with master branch and alternate location
+#   Testing /gitlab with main branch and alternate location
 ################################################################################
 echo "Testing pulling into alternate path"
-payload_with_path="${pre_branch}master${post_branch}${repo_path}${closing}"
+payload_with_path="${pre_branch}main${post_branch}${repo_path}${closing}"
 echo 'Posting this payload to /gitlab:'
 echo ${payload_with_path}|jq -C .
 echo
@@ -95,9 +95,9 @@ curl -s -H "Content-Type: application/json" -X POST -d "${payload_with_path}" ht
 custom_path_check=`ls -d ${WORKSPACE}/trees/custom_path/ |wc -l`
 
 if [ $custom_path_check -eq 1 ]; then
-  echo 'Successfully pulled master to alternate path'
+  echo 'Successfully pulled main to alternate path'
 else
-  echo 'Failed to pull master to alternate path'
+  echo 'Failed to pull main to alternate path'
   exit 1
 fi
 echo
@@ -109,7 +109,7 @@ echo
 echo "Testing that pulled files are owned by me (${USER})"
 ls -ld ${WORKSPACE}/trees/
 ls -ld ${WORKSPACE}/trees/tree-planter/
-ls -ld ${WORKSPACE}/trees/tree-planter___master/
+ls -ld ${WORKSPACE}/trees/tree-planter___main/
 ls -ld ${WORKSPACE}/trees/custom_path/
 
 # testing trees/tree-planter/
@@ -118,9 +118,9 @@ if [ "`stat -c '%U' ${WORKSPACE}/trees`" != "`stat -c '%U' ${WORKSPACE}/trees/tr
   exit 1
 fi
 
-# testing trees/tree-planter___master/
-if [ "`stat -c '%U' ${WORKSPACE}/trees`" != "`stat -c '%U' ${WORKSPACE}/trees/tree-planter___master/`" ]; then
-  echo 'Ownership is not the same on ./trees and ./trees/tree-planter___master'
+# testing trees/tree-planter___main/
+if [ "`stat -c '%U' ${WORKSPACE}/trees`" != "`stat -c '%U' ${WORKSPACE}/trees/tree-planter___main/`" ]; then
+  echo 'Ownership is not the same on ./trees and ./trees/tree-planter___main'
   exit 1
 fi
 
@@ -135,7 +135,7 @@ echo
 ################################################################################
 #   Testing /gitlab with the branch defined by ${GIT_HEAD_REF}
 ################################################################################
-if [ "${current_branch}" != "master" ]; then
+if [ "${current_branch}" != "main" ]; then
   current_branch=${GIT_HEAD_REF}
   payload="${pre_branch}${GIT_HEAD_REF}${pr_post_branch}${closing}"
   echo "Posting this payload to /gitlab to test branch ${current_branch}:"

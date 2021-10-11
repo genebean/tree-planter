@@ -1,8 +1,6 @@
 [![GitHub tag][gh-tag-img]]()
-[![Build Status][travis-img-master]][travis-ci]
-[![][microbadger-img]][microbadger]
+[![Docker Image CI](https://github.com/genebean/tree-planter/actions/workflows/docker-image.yml/badge.svg)](https://github.com/genebean/tree-planter/actions/workflows/docker-image.yml)
 [![security][hakiri-img]][hakiri]
-[![Dependabot Status][dependabot-img]][dependabot-url]
 
 # tree-planter
 
@@ -13,15 +11,16 @@ Technology-wise, tree-planter is a Ruby application built on [Sinatra][sinatra].
 - [File ownership / permissions](#file-ownership--permissions)
 - [Running the container](#running-the-container)
   - [And here it is all together](#and-here-it-is-all-together)
+  - [Send email on deployment failure](#send-email-on-deployment-failure)
 - [End Points](#end-points)
 - [Examples](#examples)
   - [Metrics](#metrics)
-  - [Triggering the /deploy endpoint via cURL](#triggering-the-deploy-endpoint-via-curl)
-  - [Triggering the /gitlab endpoint via cURL with a GitLab-like payload](#triggering-the-gitlab-endpoint-via-curl-with-a-gitlab-like-payload)
+  - [Triggering the `/deploy` endpoint via cURL](#triggering-the-deploy-endpoint-via-curl)
+  - [Triggering the `/gitlab` endpoint via cURL with a GitLab-like payload](#triggering-the-gitlab-endpoint-via-curl-with-a-gitlab-like-payload)
   - [Clone a branch into an alternate destination path](#clone-a-branch-into-an-alternate-destination-path)
   - [Delete cloned copy of feature/parsable_names branch with a GitLab-like payload](#delete-cloned-copy-of-featureparsable_names-branch-with-a-gitlab-like-payload)
 - [Updating Gemfile.lock](#updating-gemfilelock)
-- [Development &amp; Testing](#development-amp-testing)
+- [Development & Testing](#development--testing)
   - [Vagrant](#vagrant)
   - [Manual testing](#manual-testing)
   - [Validation](#validation)
@@ -244,7 +243,7 @@ tree-planter has the following endpoints:
 
 - `/` - when the base URL is opened in a browser it show you a list of the endpoints.
 - `/deploy` - Deploys the default branch of a repository. It accepts a POST in the format of a GitLab webhook or in the custom format shown in the examples below.
-- `/gitlab` - Deploys the branch of a repo referenced in the payload of a webhook POST from GitLab. Each branch is placed into a folder using the naming convention `repository_branch` such as `tree-planter_master`. All /'s are replaced with underscores.
+- `/gitlab` - Deploys the branch of a repo referenced in the payload of a webhook POST from GitLab. Each branch is placed into a folder using the naming convention `repository_branch` such as `tree-planter_main`. All /'s are replaced with underscores.
 - `/hook-test` - Used for testing and debugging. It displays diagnostic info about the payload that was POST'ed.
 - `/metrics` - Displays Prometheus metrics
 
@@ -259,8 +258,8 @@ Both stock metrics provided by integrating with Rack and custom metrics are avai
 ```plain
 # TYPE tree_deploys counter
 # HELP tree_deploys A count of how many times each variation of each tree has been deployed
-tree_deploys{tree_name="tree-planter",branch_name="master",repo_path="tree-planter",endpoint="deploy"} 3.0
-tree_deploys{tree_name="tree-planter",branch_name="master",repo_path="tree-planter___master",endpoint="gitlab"} 2.0
+tree_deploys{tree_name="tree-planter",branch_name="main",repo_path="tree-planter",endpoint="deploy"} 3.0
+tree_deploys{tree_name="tree-planter",branch_name="main",repo_path="tree-planter___main",endpoint="gitlab"} 2.0
 # TYPE http_server_requests_total counter
 # HELP http_server_requests_total The total number of HTTP requests handled by the Rack application.
 http_server_requests_total{code="200",method="head",path="/"} 1.0
@@ -306,9 +305,9 @@ Already up-to-date.
 ### Triggering the `/gitlab` endpoint via cURL with a GitLab-like payload
 
 ```bash
-# Pull master branch
+# Pull main branch
 curl -H "Content-Type: application/json" -X POST -d \
-'{"ref":"refs/heads/master", "checkout_sha":"858f1411ecd9d0b7c8f049a98412d1b3dcb68eae", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}' \
+'{"ref":"refs/heads/main", "checkout_sha":"858f1411ecd9d0b7c8f049a98412d1b3dcb68eae", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}' \
 http://localhost/gitlab
 
 # Pull develop branch
@@ -404,11 +403,11 @@ docker exec johnny_appleseed /bin/sh -c 'bundle exec rake test'
 sudo rm -rf /home/vagrant/trees/tree-planter*
 
 curl -H "Content-Type: application/json" -X POST -d \
-  '{"ref":"refs/heads/master", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}' \
+  '{"ref":"refs/heads/main", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}' \
   http://localhost:80/deploy
 
 curl -H "Content-Type: application/json" -X POST -d \
-  '{"ref":"refs/heads/master", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}' \
+  '{"ref":"refs/heads/main", "repository":{"name":"tree-planter", "url":"https://github.com/genebean/tree-planter.git" }}' \
   http://localhost:80/gitlab
 
 ls -ld /home/vagrant/trees/
@@ -443,21 +442,15 @@ Lastly, be sure to check the output of the [`/metrics` endpoint](http://localhos
 
 
 [debian]: https://hub.docker.com/_/debian/
-[dependabot-img]: https://api.dependabot.com/badges/status?host=github&repo=genebean/tree-planter
-[dependabot-url]: https://dependabot.com
 [dockerimage]: https://hub.docker.com/r/genebean/tree-planter/
 [gh-tag-img]: https://img.shields.io/github/tag/genebean/tree-planter.svg
 [gosu]: https://github.com/tianon/gosu
-[hakiri]: https://hakiri.io/github/genebean/tree-planter/master
-[hakiri-img]: https://hakiri.io/github/genebean/tree-planter/master.svg
-[microbadger]:https://microbadger.com/images/genebean/tree-planter
-[microbadger-img]:https://images.microbadger.com/badges/image/genebean/tree-planter.svg
+[hakiri]: https://hakiri.io/github/genebean/tree-planter/main
+[hakiri-img]: https://hakiri.io/github/genebean/tree-planter/main.svg
 [ngrok]: https://ngrok.com
 [passenger]: https://www.phusionpassenger.com
 [puppet]: https://puppet.com
 [puppetlabs/docker]: https://forge.puppet.com/puppetlabs/docker
 [ruby]: https://hub.docker.com/_/ruby/
 [sinatra]: http://www.sinatrarb.com
-[travis-ci]: https://travis-ci.com/genebean/tree-planter
-[travis-img-master]: https://img.shields.io/travis/genebean/tree-planter/master.svg
 [vs]: https://www.vagrantup.com/docs/share/http.html
