@@ -12,7 +12,7 @@ gem 'sinatra',           '~> 2.1'
 
 group :test do
   gem 'minitest',            '~> 5.14', '>= 5.14.4'
-  gem 'minitest-reporters', '~> 1.4', '>= 1.4.3'
+  gem 'minitest-reporters', '~> 1.5'
   gem 'rack-test',           '~> 1.1'
   gem 'rubocop',             '~> 1.22', '>= 1.22.1'
   gem 'rubocop-minitest',    '~> 0.15.2'
