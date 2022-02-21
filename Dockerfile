@@ -1,4 +1,4 @@
-FROM ruby:3.0.3-slim-buster
+FROM ruby:3.1.1-slim-buster
 
 LABEL maintainer "gene@technicalissues.us"
 
