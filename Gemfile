@@ -15,6 +15,6 @@ group :test do
   gem 'minitest-reporters', '~> 1.4', '>= 1.4.3'
   gem 'rack-test',           '~> 1.1'
   gem 'rubocop',             '~> 1.22', '>= 1.22.1'
-  gem 'rubocop-minitest',    '~> 0.15.2'
+  gem 'rubocop-minitest',    '~> 0.18.0'
   gem 'rubocop-performance', '~> 1.7'
 end
