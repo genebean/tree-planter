@@ -19,7 +19,7 @@ GEM
     parallel (1.21.0)
     parser (3.0.2.0)
       ast (~> 2.4.1)
-    passenger (6.0.11)
+    passenger (6.0.14)
       rack
       rake (>= 0.8.1)
     pony (1.13.1)
@@ -68,7 +68,7 @@ DEPENDENCIES
   json (~> 2.3)
   minitest (~> 5.14, >= 5.14.4)
   minitest-reporters (~> 1.4, >= 1.4.3)
-  passenger (~> 6.0, >= 6.0.11)
+  passenger (~> 6.0)
   pony (~> 1.13)
   prometheus-client (~> 2.1)
   rack (~> 2.2)
