@@ -14,7 +14,7 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
-    mustermann (1.1.1)
+    mustermann (1.1.2)
       ruby2_keywords (~> 0.0.1)
     parallel (1.21.0)
     parser (3.0.2.0)
@@ -26,7 +26,7 @@ GEM
       mail (>= 2.0)
     prometheus-client (2.1.0)
     rack (2.2.3)
-    rack-protection (2.1.0)
+    rack-protection (2.2.1)
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -52,10 +52,10 @@ GEM
       rubocop-ast (>= 0.4.0)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
-    sinatra (2.1.0)
+    sinatra (2.2.1)
       mustermann (~> 1.0)
       rack (~> 2.2)
-      rack-protection (= 2.1.0)
+      rack-protection (= 2.2.1)
       tilt (~> 2.0)
     tilt (2.0.10)
     unicode-display_width (2.1.0)
@@ -76,7 +76,7 @@ DEPENDENCIES
   rubocop (~> 1.22, >= 1.22.1)
   rubocop-minitest (~> 0.15.2)
   rubocop-performance (~> 1.7)
-  sinatra (~> 2.1)
+  sinatra (~> 2.2)
 
 BUNDLED WITH
    2.2.29
