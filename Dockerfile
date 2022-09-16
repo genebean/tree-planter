@@ -1,4 +1,4 @@
-FROM ruby:3.0.3-slim-buster
+FROM ruby:3.1.2-slim-buster
 
 LABEL maintainer "gene@technicalissues.us"
 
@@ -26,7 +26,7 @@ RUN dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
 
 ADD Gemfile* $APP_ROOT/
 
-RUN gem install bundler && bundle install --jobs=3 --without development
+RUN gem install bundler && bundle install --jobs=3
 
 ADD . $APP_ROOT
 COPY config-example.json $APP_ROOT/config.json
