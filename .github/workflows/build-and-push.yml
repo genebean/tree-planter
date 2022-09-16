@@ -38,7 +38,7 @@ jobs:
             org.label-schema.vcs-ref=${{ github.sha }}
             org.label-schema.vcs-url=${{ github.repositoryUrl }}
           tags: |
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
-            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}/tree-planter:${{ github.sha }}
+            ghcr.io/${{ github.repository }}/tree-planter:latest
             ${{ secrets.DOCKERHUB_USERNAME }}:${{ github.sha }}
             ${{ secrets.DOCKERHUB_USERNAME }}:latest
