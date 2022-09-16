@@ -1,6 +1,5 @@
 [![GitHub tag][gh-tag-img]]()
 [![Docker Image CI](https://github.com/genebean/tree-planter/actions/workflows/docker-image.yml/badge.svg)](https://github.com/genebean/tree-planter/actions/workflows/docker-image.yml)
-[![security][hakiri-img]][hakiri]
 
 # tree-planter
 
@@ -378,7 +377,7 @@ You can then easily rebuild and test your code by stopping the puppet-created se
 sudo systemctl stop docker-johnny_appleseed
 cd /vagrant
 docker build -t genebean/tree-planter .
-docker run --rm -p 80:8080 -v /home/vagrant/.ssh/vagrant_priv_key:/home/user/.ssh/id_rsa -v /home/vagrant/trees:/opt/trees -v /var/log/tree-planter:/var/www/tree-planter/log -e LOCAL_USER_ID=1000
+docker run --rm -p 80:8080 -v /home/vagrant/.ssh/vagrant_priv_key:/home/user/.ssh/id_rsa -v /home/vagrant/trees:/opt/trees -v /var/log/tree-planter:/var/www/tree-planter/log -e LOCAL_USER_ID=1000 genebean/tree-planter:latest
 ```
 
 Depending on your changes, you may also need to clean up what currently exists:
@@ -445,8 +444,6 @@ Lastly, be sure to check the output of the [`/metrics` endpoint](http://localhos
 [dockerimage]: https://hub.docker.com/r/genebean/tree-planter/
 [gh-tag-img]: https://img.shields.io/github/tag/genebean/tree-planter.svg
 [gosu]: https://github.com/tianon/gosu
-[hakiri]: https://hakiri.io/github/genebean/tree-planter/main
-[hakiri-img]: https://hakiri.io/github/genebean/tree-planter/main.svg
 [ngrok]: https://ngrok.com
 [passenger]: https://www.phusionpassenger.com
 [puppet]: https://puppet.com
@@ -454,3 +451,4 @@ Lastly, be sure to check the output of the [`/metrics` endpoint](http://localhos
 [ruby]: https://hub.docker.com/_/ruby/
 [sinatra]: http://www.sinatrarb.com
 [vs]: https://www.vagrantup.com/docs/share/http.html
+
