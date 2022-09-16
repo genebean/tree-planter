@@ -3,6 +3,7 @@ on:
   push:
       branches:
         - main
+
 jobs:
   Build-and-Push:
     runs-on: ubuntu-latest
@@ -34,11 +35,12 @@ jobs:
         with:
           context: .
           push: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           labels: |
             org.label-schema.vcs-ref=${{ github.sha }}
-            org.label-schema.vcs-url=${{ github.repositoryUrl }}
+            org.label-schema.vcs-url=https://github.com/${{ github.repository }}
           tags: |
-            ghcr.io/${{ github.repository }}/tree-planter:${{ github.sha }}
-            ghcr.io/${{ github.repository }}/tree-planter:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}:${{ github.sha }}
-            ${{ secrets.DOCKERHUB_USERNAME }}:latest
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/tree-planter:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/tree-planter:latest
