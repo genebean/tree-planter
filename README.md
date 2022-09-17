@@ -1,4 +1,5 @@
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/genebean/tree-planter?label=GitHub%20Release)
+![Docker Image Version (latest semver)](https://img.shields.io/docker/v/genebean/tree-planter?label=Docker%20Image&style=plastic)
+![GitHub Release (latest by date)](https://img.shields.io/github/v/release/genebean/tree-planter?label=GitHub%20Release&style=plastic)
 [![Docker Image CI](https://github.com/genebean/tree-planter/actions/workflows/docker-image.yml/badge.svg)](https://github.com/genebean/tree-planter/actions/workflows/docker-image.yml)
 [![Build-and-Push](https://github.com/genebean/tree-planter/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/genebean/tree-planter/actions/workflows/build-and-push.yml)
 
