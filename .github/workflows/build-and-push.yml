@@ -30,8 +30,14 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Generate Tag value
+        id: generate_tag_value
+        run: |
+          echo '::echo::on'
+          echo ::set-output name=image_tag::$(date +"%F")-$(git rev-parse --short HEAD)
+
       - name: Build Docker Image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: true
@@ -40,7 +46,33 @@ jobs:
             org.label-schema.vcs-ref=${{ github.sha }}
             org.label-schema.vcs-url=https://github.com/${{ github.repository }}
           tags: |
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}:${{ steps.generate_tag_value.outputs.image_tag }}
             ghcr.io/${{ github.repository }}:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/tree-planter:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/tree-planter:${{ steps.generate_tag_value.outputs.image_tag }}
             ${{ secrets.DOCKERHUB_USERNAME }}/tree-planter:latest
+
+      - name: Generate Release Body
+        env:
+          RELEASE_BODY_FILE: "release-body.md"
+        run: |
+          echo "## Components" > ${RELEASE_BODY_FILE}
+          echo "" >> ${RELEASE_BODY_FILE}
+          echo "This release includes the following:" >> ${RELEASE_BODY_FILE}
+          echo "" >> ${RELEASE_BODY_FILE}
+          echo "### Source image" >> ${RELEASE_BODY_FILE}
+          echo "" >> ${RELEASE_BODY_FILE}
+          echo "- $(grep ^FROM ./Dockerfile |cut -d ' ' -f2)" >> ${RELEASE_BODY_FILE}
+          echo "- OS updates" >> ${RELEASE_BODY_FILE}
+          echo "- Updates via Dependabot PRs" >> ${RELEASE_BODY_FILE}
+          echo "- Updates via any other merged PRs" >> ${RELEASE_BODY_FILE}
+          echo "" >> ${RELEASE_BODY_FILE}
+
+      - name: Tag Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.generate_tag_value.outputs.image_tag }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
+          prerelease: false
+          bodyFile: "release-body.md"
+          generateReleaseNotes: true
