@@ -26,7 +26,7 @@ GEM
     parallel (1.22.1)
     parser (3.1.2.1)
       ast (~> 2.4.1)
-    passenger (6.0.14)
+    passenger (6.0.15)
       rack
       rake (>= 0.8.1)
     pony (1.13.1)
@@ -78,7 +78,7 @@ DEPENDENCIES
   minitest (~> 5.14, >= 5.14.4)
   minitest-reporters (~> 1.4, >= 1.4.3)
   net-smtp (~> 0.3.1)
-  passenger (~> 6.0, >= 6.0.11)
+  passenger (~> 6.0)
   pony (~> 1.13)
   prometheus-client (~> 2.1)
   rack (~> 2.2)
