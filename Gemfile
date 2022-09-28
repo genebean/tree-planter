@@ -4,7 +4,7 @@ source 'https://rubygems.org/'
 
 # App Stack
 gem 'json',              '~> 2.3'
-gem 'net-smtp',          '~> 0.3.1'
+gem 'net-smtp',          '~> 0.3.2'
 gem 'passenger',         '~> 6.0', '>= 6.0.11'
 gem 'pony',              '~> 1.13'
 gem 'prometheus-client', '~> 2.1'
