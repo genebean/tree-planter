@@ -8,7 +8,7 @@ GEM
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     mini_mime (1.1.2)
-    minitest (5.16.3)
+    minitest (5.17.0)
     minitest-reporters (1.5.0)
       ansi
       builder
@@ -72,7 +72,7 @@ PLATFORMS
 
 DEPENDENCIES
   json (~> 2.3)
-  minitest (~> 5.14, >= 5.14.4)
+  minitest (~> 5.17)
   minitest-reporters (~> 1.4, >= 1.4.3)
   net-smtp (~> 0.3.3)
   passenger (~> 6.0)
