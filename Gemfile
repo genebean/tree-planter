@@ -7,7 +7,7 @@ gem 'json',              '~> 2.3'
 gem 'net-smtp',          '~> 0.3.3'
 gem 'passenger',         '~> 6.0'
 gem 'pony',              '~> 1.13'
-gem 'prometheus-client', '~> 2.1'
+gem 'prometheus-client', '~> 4.0'
 gem 'rack',              '~> 2.2'
 gem 'sinatra',           '~> 2.1'
 
