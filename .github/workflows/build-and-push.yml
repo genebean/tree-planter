@@ -1,8 +1,9 @@
 name: Build-and-Push
+
 on:
-  push:
-      branches:
-        - main
+  schedule:
+    - cron: '0 0 1 * *' # monthly
+  workflow_dispatch:
 
 jobs:
   Build-and-Push:
