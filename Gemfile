@@ -3,7 +3,7 @@
 source 'https://rubygems.org/'
 
 # App Stack
-gem 'json',              '~> 2.3'
+gem 'json',              '~> 2.6'
 gem 'net-smtp',          '~> 0.3.3'
 gem 'passenger',         '~> 6.0'
 gem 'pony',              '~> 1.13'

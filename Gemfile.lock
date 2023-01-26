@@ -4,7 +4,7 @@ GEM
     ansi (1.5.0)
     ast (2.4.2)
     builder (3.2.4)
-    json (2.6.2)
+    json (2.6.3)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     mini_mime (1.1.2)
@@ -71,7 +71,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  json (~> 2.3)
+  json (~> 2.6)
   minitest (~> 5.17)
   minitest-reporters (~> 1.4, >= 1.4.3)
   net-smtp (~> 0.3.3)
