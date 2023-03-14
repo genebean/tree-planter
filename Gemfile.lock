@@ -29,7 +29,7 @@ GEM
     pony (1.13.1)
       mail (>= 2.0)
     prometheus-client (2.1.0)
-    rack (2.2.6.2)
+    rack (2.2.6.4)
     rack-protection (2.2.2)
       rack
     rack-test (2.0.2)
